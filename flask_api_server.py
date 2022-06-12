@@ -14,27 +14,25 @@ app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/my_endpoint', methods=['GET'])
-def my_endpoint():
-    print(request)
-
-    print(datetime.datetime.now())
-
-    return {"status":"ok","resp":"karina_molodec"}
+def my_endpoint_function():
+    return {"status":str(datetime.datetime.now()),"resp":"serega_molodec"}
 
 @app.route('/get_data', methods=['GET'])
-def get_data():
+def get_data_function():
+    #print("!"*20)
     input_args = request.args
-    print(request)
     print(input_args)
-    print(datetime.datetime.now())
 
-    answer_dic = {"status":"ok","resp":"default"}
+    answer_dic = {}
     if "name" in input_args:
-        if input_args["name"]=="holly": 
-            print("the name is correct"); answer_dic["resp"]="correct"
-        if input_args["name"]=="karina": answer_dic["resp"]="hello karina"
+        if input_args["name"]=="holly" and input_args["id"]=="2": 
+            print("the name is correct")
+            answer_dic["resp"]="correct"
+            answer_dic["date_time"]=str(datetime.datetime.now())
+        if input_args["name"]=="jane": 
+            answer_dic["resp"]="hello jane"
     
     return answer_dic
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=9020, debug=True, ssl_context=('./keys/fullchain.pem', './keys/privkey.pem'))
+    app.run(host='0.0.0.0', port=9020, ssl_context=('./keys/fullchain.pem', './keys/privkey.pem'))
