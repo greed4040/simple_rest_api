@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Картотека</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" >
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+    <style>
+    </style>
+    <script>
+        server_url="https://bananaclass.ru:9020/";
+        function request_get(inp_data){
+            var xhr = new XMLHttpRequest(); 
+
+            const target = new URL(server_url+inp_data["command"]);
+            target.search = new URLSearchParams(inp_data).toString();
+            console.log("the target:", target);
+
+            xhr.open("GET", target.href, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+                
+
+            //console.log("request_master_get sending data:"+data);
+            xhr.send();
+            xhr.timeout = 5000;
+            xhr.ontimeout = function (e) { console.log('error:', e); };
+            xhr.error = function(e) { console.log(e); };
+
+            xhr.onload = function() {
+                console.log('loaded');
+                console.log("#request_master_get local done");
+                console.log("#request_master_get", this.responseText);
+                if (this.responseText.includes("Bad Request")){
+                    output="<pre>"+this.responseText+"</pre>";
+                    document.getElementById("output").innerHTML=output;
+                } else{
+                    var answered_data = JSON.parse(this.responseText);
+                    console.log("#request_master_get answered_data:", answered_data);                    
+                    console.log(typeof answered_data);
+                    console.log(answered_data.toString());
+                    //answered_json=JSON.parse(answered_data.toString());
+                    document.getElementById("output").innerHTML="<pre>"+JSON.stringify(answered_data, null, '\t')+"</pre>";
+                }
+
+                
+            }
+        }
+        function start(){
+            var myModal = new bootstrap.Modal(document.getElementById("thats_the_modal"), {});
+            document.getElementById("thats_the_modal_title").innerHTML="Введите пароль";
+            myModal.show();
+        }
+        function validate(){
+            var name_from_web_form = document.getElementById("exPass1").value;
+            console.log(name_from_web_form);
+            request_get({"command":"get_data", "name":name_from_web_form})
+        }
+    </script>
+</head>
+
+<body>
+    <div class="w-100 p-3">to download curl, visit https://curl.se/windows/</div>
+    <div class="w-50 p-3">
+        
+        <input class="form-control" id="exPass1" value="default">
+        <div> нажимаем для отправки </div>
+        <button type="submit" class="btn btn-primary" onclick="validate();">отправить</button>
+        
+    </div>
+    <div class="w-100 p-3">curl -X GET -H "Content-Type: application/json" https://bananaclass.ru:9020/get_data?name=jane</div>
+    <div class="w-100 p-3">curl -X GET -H "Content-Type: application/json" https://bananaclass.ru:9020/get_data?name=holly</div>
+    <div id="output" class="w-100 p-3"></div>
+</body>
+</html>
+
