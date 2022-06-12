@@ -64,11 +64,21 @@
 
 <body>
     <div class="w-100 p-3">to download curl, visit https://curl.se/windows/</div>
-    <div class="w-50 p-3">
+    <div class="mb-3 w-50 p-3">
+        <label for="exampleInputEmail1" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="exPass1" aria-describedby="emailHelp" value="default">
+        <div id="emailHelp" class="form-text"><b>jane</b> or <b>holly</b></div>
+      </div>
+    <div class="w-50 p-3 row">
+        <div class="col">
+            <div> get_data function </div>
+            <button type="submit" class="btn btn-primary" onclick="validate();">get_data</button>
+        </div>
+        <div class="col">
+            <div> my_endpoint function </div>
+            <button type="submit" class="btn btn-primary" onclick="validate();">my_endpoint</button>
+        </div>
         
-        <input class="form-control" id="exPass1" value="default">
-        <div> нажимаем для отправки </div>
-        <button type="submit" class="btn btn-primary" onclick="validate();">отправить</button>
         
     </div>
     <div class="w-100 p-3">curl -X GET -H "Content-Type: application/json" <a href="https://bananaclass.ru:9020/get_data?name=jane">https://bananaclass.ru:9020/get_data?name=jane</a></div>
