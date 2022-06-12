@@ -49,10 +49,10 @@
                 
             }
         }
-        function validate(){
+        function validate(command_name){
             var name_from_web_form = document.getElementById("exPass1").value;
             console.log(name_from_web_form);
-            request_get({"command":"get_data", "name":name_from_web_form})
+            request_get({"command":command_name, "name":name_from_web_form})
         }
     </script>
 </head>
@@ -67,11 +67,11 @@
     <div class="w-50 p-3 row">
         <div class="col">
             <div> get_data function </div>
-            <button type="submit" class="btn btn-primary" onclick="validate();">get_data</button>
+            <button type="submit" class="btn btn-primary" onclick="validate('get_data');">get_data</button>
         </div>
         <div class="col">
             <div> my_endpoint function </div>
-            <button type="submit" class="btn btn-primary" onclick="validate();">my_endpoint</button>
+            <button type="submit" class="btn btn-primary" onclick="validate('my_endpoint');">my_endpoint</button>
         </div>
         
         

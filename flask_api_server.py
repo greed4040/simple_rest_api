@@ -23,7 +23,7 @@ def get_data_function():
     input_args = request.args
     print(input_args)
 
-    answer_dic = {}
+    answer_dic = {"resp":"empty"}
     if "name" in input_args:
         if input_args["name"]=="holly" and input_args["id"]=="2": 
             print("the name is correct")
