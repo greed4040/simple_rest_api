@@ -49,36 +49,121 @@
                 
             }
         }
+        
+        function request_post(inp_data){
+            var xhr = new XMLHttpRequest(); 
+            xhr.open("POST", server_url+inp_data["command"], true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+                        
+            inp_data["id"]=155;
+            d=JSON.stringify(inp_data);
+            console.log("request_master_post_mod 2 sending data:"+d);
+            xhr.send(d);
+            xhr.timeout = 5000;
+            xhr.ontimeout = function (e) {
+                console.log('error:', e);
+                show_message('error', inp_data["command"]+" timed out!" +e);
+            };
+            xhr.error = function(e) {
+                console.log(e);
+                show_message('error', inp_data["command"]+" failed! Error:" +e);
+            };
+            xhr.onload = function() {
+                console.log("loaded");
+                console.log("request_post done");
+                var answered_data = JSON.parse(this.responseText);
+                console.log("request_post answer:", answered_data);
+
+                console.log(typeof answered_data);
+
+                console.log("#request_master_get answered_data:", answered_data);                    
+                console.log(typeof answered_data);
+                console.log(answered_data.toString());
+                //answered_json=JSON.parse(answered_data.toString());
+                document.getElementById("output").innerHTML="<pre>"+JSON.stringify(answered_data, null, '\t')+"</pre>";
+            }
+        }
         function validate(command_name){
-            var name_from_web_form = document.getElementById("exPass1").value;
-            console.log(name_from_web_form);
-            request_get({"command":command_name, "name":name_from_web_form})
+            var string_from_web_form = document.getElementById("exPass1").value;
+            console.log(string_from_web_form);
+            request_get({"command":command_name, "name":string_from_web_form})
+        }
+
+        function validate_post(command_name){
+            var string_from_web_form = document.getElementById("exPass2").value;
+            console.log(string_from_web_form);
+            request_post({"command":command_name, "name":string_from_web_form})
         }
     </script>
 </head>
 
 <body>
     <div class="w-100 p-3">to download curl, visit https://curl.se/windows/</div>
-    <div class="mb-3 w-50 p-3">
-        <label for="exampleInputEmail1" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="exPass1" aria-describedby="emailHelp" value="default">
-        <div id="emailHelp" class="form-text"><b>jane</b> or <b>holly</b></div>
-      </div>
     <div class="w-50 p-3 row">
-        <div class="col">
-            <div> get_data function </div>
-            <button type="submit" class="btn btn-primary" onclick="validate('get_data');">get_data</button>
-        </div>
-        <div class="col">
-            <div> my_endpoint function </div>
-            <button type="submit" class="btn btn-primary" onclick="validate('my_endpoint');">my_endpoint</button>
-        </div>
-        
-        
+        <h2>GET requests</h2>
+        <p><a class="btn btn-warning" data-bs-toggle="collapse" href="#multiCollapse1" role="button" aria-expanded="false" aria-controls="multiCollapse1">show</a></p>
     </div>
-    <div class="w-100 p-3">curl -X GET -H "Content-Type: application/json" <a href="https://bananaclass.ru:9020/get_data?name=jane">https://bananaclass.ru:9020/get_data?name=jane</a></div>
-    <div class="w-100 p-3">curl -X GET -H "Content-Type: application/json" -sS "<a href="https://bananaclass.ru:9020/get_data?name=holly&id=2">https://bananaclass.ru:9020/get_data?name=holly&id=2</a>"</div>
-    <div id="output" class="w-100 p-3"></div>
+    <div class="collapse multi-collapse" id="multiCollapse1">
+        <div class="mb-3 w-50 p-3">
+            <label for="exampleInput" class="form-label">Fill the field to send the data using GET request</label>
+            <input type="email" class="form-control" id="exPass1" aria-describedby="emailHelp" value="default">
+            <div id="emailHelp" class="form-text"><b>jane</b> or <b>holly</b></div>
+        </div>
+        <div class="w-50 p-3 row">
+            <div class="col">
+                <div> <b>get_data</b> function, with parameters</div>
+            </div>
+            <div class="col">
+                <div> <b>my_endpoint</b> function no parameters</div>
+            </div>
+        </div>
+        <div class="w-50 p-3 row">
+            <div class="col">
+                <button type="submit" class="btn btn-primary" onclick="validate('get_data');">get_data</button>
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-primary" onclick="validate('my_endpoint');">my_endpoint</button>
+            </div>
+        </div>
+        <div class="w-100 p-3">curl -X GET -H "Content-Type: application/json" <a href="https://bananaclass.ru:9020/get_data?name=jane">https://bananaclass.ru:9020/get_data?name=jane</a></div>
+        <div class="w-100 p-3">curl -X GET -H "Content-Type: application/json" -sS "<a href="https://bananaclass.ru:9020/get_data?name=holly&id=2">https://bananaclass.ru:9020/get_data?name=holly&id=2</a>"</div>
+    </div>
+    <div class="p-3 w-50">
+        <div class="card-header w-70 p-3">
+            query result
+        </div>
+        <div id="output" class="w-70 p-3 card card-body bg-light"></div>
+    </div>
+
+    <div class="w-50 p-3 row">
+        <h2>POST requests</h2>
+        <p><a class="btn btn-warning" data-bs-toggle="collapse" href="#multiCollapse2" role="button" aria-expanded="false" aria-controls="multiCollapse2">show</a></p>
+    </div>
+    <div class="collapse multi-collapse" id="multiCollapse2">
+        <div class="mb-3 w-50 p-3">
+            <label for="exampleInputEmail1" class="form-label">Fill the field to send the data using GET request</label>
+            <input type="email" class="form-control" id="exPass2" aria-describedby="emailHelp" value="default">
+            <div id="emailHelp" class="form-text"><b>bob</b> or <b>samantha</b></div>
+        </div>
+        <div class="w-50 p-3 row">
+            <div class="col">
+                <div> <b>post_data</b> function, with parameters</div>
+            </div>
+            <div class="col">
+                <div> <b>my_post_endpoint</b> function no parameters</div>
+            </div>
+        </div>
+        <div class="w-50 p-3 row">
+            <div class="col">
+                <button type="submit" class="btn btn-primary" onclick="validate_post('post_data');">post_data</button>
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-primary" onclick="validate_post('my_post_endpoint');">my_post_endpoint</button>
+            </div>
+        </div>
+        <div class="w-100 p-3">curl -X POST -H "Content-Type: application/json" -d '{"name": "samantha"}' https://bananaclass.ru:9020/post_data</div>
+        <div class="w-100 p-3">curl -X POST -H "Content-Type: application/json" -d '{"name": "bob","id": 155}' https://bananaclass.ru:9020/post_data</div>
+    </div>    
 </body>
 </html>
 

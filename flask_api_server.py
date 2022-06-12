@@ -15,7 +15,11 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/my_endpoint', methods=['GET'])
 def my_endpoint_function():
-    return {"status":str(datetime.datetime.now()),"resp":"serega_molodec"}
+    return {"status":str(datetime.datetime.now()),"resp":"serega_molodec_no_params"}
+
+@app.route('/my_post_endpoint', methods=['POST'])
+def my_endpoint_post_function():
+    return {"status":str(datetime.datetime.now()),"resp":"post_request_no_params"}
 
 @app.route('/get_data', methods=['GET'])
 def get_data_function():
@@ -32,6 +36,20 @@ def get_data_function():
         if input_args["name"]=="jane": 
             answer_dic["resp"]="hello jane"
     
+    return answer_dic
+
+@app.route('/post_data', methods=['POST'])
+def post_data_function():
+    input_dictionary=request.json
+    print(input_dictionary, type(input_dictionary))
+    answer_dic = {"resp":"empty"}
+    if "name" in input_dictionary:
+        if input_dictionary["name"]=="bob" and input_dictionary["id"]==155: 
+            answer_dic["resp"]="correct"
+            answer_dic["date_time"]=str(datetime.datetime.now())
+        if input_dictionary["name"]=="samantha": 
+            answer_dic["resp"]="hello samantha"
+ 
     return answer_dic
 
 if __name__ == '__main__':
