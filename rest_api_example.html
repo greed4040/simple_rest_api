@@ -14,7 +14,8 @@
         server_url="https://bananaclass.ru:9020/";
         function request_get(inp_data){
             var xhr = new XMLHttpRequest(); 
-
+            
+            inp_data["id"]=2;
             const target = new URL(server_url+inp_data["command"]);
             target.search = new URLSearchParams(inp_data).toString();
             console.log("the target:", target);
@@ -70,8 +71,8 @@
         <button type="submit" class="btn btn-primary" onclick="validate();">отправить</button>
         
     </div>
-    <div class="w-100 p-3">curl -X GET -H "Content-Type: application/json" https://bananaclass.ru:9020/get_data?name=jane</div>
-    <div class="w-100 p-3">curl -X GET -H "Content-Type: application/json" https://bananaclass.ru:9020/get_data?name=holly</div>
+    <div class="w-100 p-3">curl -X GET -H "Content-Type: application/json" <a href="https://bananaclass.ru:9020/get_data?name=jane">https://bananaclass.ru:9020/get_data?name=jane</a></div>
+    <div class="w-100 p-3">curl -X GET -H "Content-Type: application/json" <a href="https://bananaclass.ru:9020/get_data?name=holly&id=2">https://bananaclass.ru:9020/get_data?name=holly&id=2</a></div>
     <div id="output" class="w-100 p-3"></div>
 </body>
 </html>
