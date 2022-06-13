@@ -125,8 +125,9 @@
                 <button type="submit" class="btn btn-primary" onclick="validate('my_endpoint');">my_endpoint</button>
             </div>
         </div>
-        <div class="w-100 p-3">curl -X GET -H "Content-Type: application/json" <a href="https://bananaclass.ru:9020/get_data?name=jane">https://bananaclass.ru:9020/get_data?name=jane</a></div>
-        <div class="w-100 p-3">curl -X GET -H "Content-Type: application/json" -sS "<a href="https://bananaclass.ru:9020/get_data?name=holly&id=2">https://bananaclass.ru:9020/get_data?name=holly&id=2</a>"</div>
+        <div class="w-100 p-0">curl -X GET -H "Content-Type: application/json" <a href="https://bananaclass.ru:9020/get_data?name=jane">https://bananaclass.ru:9020/get_data?name=jane</a></div>
+        <div class="w-100 p-0">curl -X GET -H "Content-Type: application/json" -sS "<a href="https://bananaclass.ru:9020/get_data?name=holly&id=2">https://bananaclass.ru:9020/get_data?name=holly&id=2</a>"</div>
+        <div class="w-100 p-0">curl -X GET -H "Content-Type: application/json" -sS "<a href="https://bananaclass.ru:9020/my_endpoint">https://bananaclass.ru:9020/my_endpoint</a>"</div>
     </div>
     <div class="p-3 w-50">
         <div class="card-header w-70 p-3">
@@ -161,8 +162,9 @@
                 <button type="submit" class="btn btn-primary" onclick="validate_post('my_post_endpoint');">my_post_endpoint</button>
             </div>
         </div>
-        <div class="w-100 p-3">curl -X POST -H "Content-Type: application/json" -d '{"name": "samantha"}' https://bananaclass.ru:9020/post_data</div>
-        <div class="w-100 p-3">curl -X POST -H "Content-Type: application/json" -d '{"name": "bob","id": 155}' https://bananaclass.ru:9020/post_data</div>
+        <div class="w-100 p-0">curl -X POST -H "Content-Type: application/json" -d '{"name": "samantha"}' https://bananaclass.ru:9020/post_data</div>
+        <div class="w-100 p-0">curl -X POST -H "Content-Type: application/json" -d '{"name": "bob","id": 155}' https://bananaclass.ru:9020/post_data</div>
+        <div class="w-100 p-0">curl -X POST -H "Content-Type: application/json" https://bananaclass.ru:9020/my_post_endpoint</div>
     </div>    
 </body>
 </html>
